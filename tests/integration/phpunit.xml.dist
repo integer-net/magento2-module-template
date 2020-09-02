@@ -11,7 +11,7 @@
 >
     <testsuites>
         <testsuite name=":namespace_:module-name Integration Tests">
-            <directory suffix="Test.php">../../../vendor/:vendor/:package/tests</directory>
+            <directory suffix="Test.php">../../../vendor/:vendor/:package/tests/integration</directory>
         </testsuite>
     </testsuites>
     <!-- PHP INI settings and constants definition -->

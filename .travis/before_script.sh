@@ -35,7 +35,7 @@ fi
 # prepare for test suite
 case $TEST_SUITE in
     integration)
-        cp vendor/$COMPOSER_PACKAGE_NAME/tests/phpunit.xml.dist dev/tests/integration/phpunit.xml
+        cp vendor/$COMPOSER_PACKAGE_NAME/tests/integration/phpunit.xml.dist dev/tests/integration/phpunit.xml
 
         cd dev/tests/integration
 
