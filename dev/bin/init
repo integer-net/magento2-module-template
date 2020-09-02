@@ -60,6 +60,7 @@ class Initialize
         $values = [
             'vendor'           => 'acme',
             'package'          => 'magento2-awesome-module',
+            'description'      => 'This module is awesome!',
             'author-name'      => trim(`git config --get user.name`) ?: 'John Doe',
             'author-email'     => trim(`git config --get user.email`) ?: 'john.doe@example.com',
             'author-github'    => 'integer-net',
