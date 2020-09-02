@@ -41,7 +41,6 @@ class Initialize
     {
         return [
             'composer.json',
-            'tests/phpunit.xml.dist',
             '.travis.yml',
             'LICENSE',
             'README.md',
@@ -49,6 +48,7 @@ class Initialize
             'registration.php',
             'src/ExampleClass.php',
             'src/etc/module.xml',
+            'tests/integration/phpunit.xml.dist',
             'tests/integration/ExampleTest.php',
             'tests/unit/ExampleTest.php',
             'tests/src/ExampleTestDataBuilder.php',
@@ -57,17 +57,20 @@ class Initialize
 
     private function getDefaultVariables(): array
     {
+        /**
+         * @todo Allow storing default variables in environment or git config
+         */
         $values = [
-            'vendor'           => 'acme-inc',
-            'package'          => 'magento2-awesome-module',
-            'description'      => 'This module is awesome!',
-            'author-name'      => trim(`git config --get user.name`) ?: 'John Doe',
-            'author-email'     => trim(`git config --get user.email`) ?: 'john.doe@example.com',
-            'author-github'    => 'acme-developer',
-            'module-namespace' => 'Acme',
-            'module-name'      => 'AwesomeModule',
-            'company'          => 'ACME Inc.',
-            'year'             => date('Y'),
+            ':vendor'           => 'acme-inc',
+            ':package'          => 'magento2-awesome-module',
+            ':description'      => 'This module is awesome!',
+            ':author-name'      => trim(`git config --get user.name`) ?: 'John Doe',
+            ':author-email'     => trim(`git config --get user.email`) ?: 'john.doe@example.com',
+            ':author-github'    => 'acme-developer',
+            ':module-namespace' => 'Acme',
+            ':module-name'      => 'AwesomeModule',
+            ':company'          => 'ACME Inc.',
+            ':year'             => date('Y'),
         ];
         return $values;
     }
@@ -114,8 +117,8 @@ class Initialize
     {
         $values = [];
         foreach ($defaultValues as $key => $default) {
-            $this->printer->out(str_replace('-', ' ', ucfirst($key)) . " [$default] ");
-            $values[':' . $key] = $this->prompt->read() ?: $default;
+            $this->printer->out(str_replace('-', ' ', ucfirst(substr($key, 1))) . " [$default] ");
+            $values[$key] = $this->prompt->read() ?: $default;
         }
         return $values;
     }
@@ -166,7 +169,49 @@ class Initialize
 
     private function success(): void
     {
-        $this->printer->success('All values have been replaced. You may now remove the dev/ directory', true);
+        $this->printer->success('All values have been replaced. Your next steps should be:', true);
+        $this->removeDevDirectory();
+        $this->commitChanges();
+        $this->installDependencies();
+    }
+
+    private function removeDevDirectory()
+    {
+        $this->printer->success(
+            implode(
+                "\n",
+                [
+                    "🔸 Remove the dev directory:",
+                    "\trm -rf ./dev",
+                ]
+            )
+        );
+    }
+
+    private function commitChanges()
+    {
+        $this->printer->success(
+            implode(
+                "\n",
+                [
+                    "🔸 Commit:",
+                    "\tgit add -A && git commit",
+                ]
+            )
+        );
+    }
+
+    private function installDependencies()
+    {
+        $this->printer->success(
+            implode(
+                "\n",
+                [
+                    "🔸 Install dependencies:",
+                    "\tcomposer install --dev",
+                ]
+            )
+        );
     }
 }
 
