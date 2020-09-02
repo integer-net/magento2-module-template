@@ -1,3 +1,9 @@
+# integer_net Magento 2 Module Template
+
+This is a GitHub template. After creating a new repository with this template, run `/dev/init` for automatic configuration. For more information, see [dev/README.md](dev/README.md)
+
+<!-- TEMPLATE -->
+
 # :namespace_:module-name Magento Module
 
 [![Code Climate](https://img.shields.io/codeclimate/github/:vendor/:package.svg)](https://codeclimate.com/github/:vendor/:package)

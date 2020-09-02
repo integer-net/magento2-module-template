@@ -1,0 +1,146 @@
+#!/usr/bin/env php
+<?php
+
+if (php_sapi_name() !== 'cli') {
+    exit;
+}
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Minicli\App;
+use Minicli\Command\CommandCall;
+use Minicli\Input;
+use Minicli\Output\OutputHandler;
+
+$app = new App(
+    [
+        'theme' => '\Unicorn',
+    ]
+);
+$app->setSignature('./' . __FILE__ . '');
+
+$app->registerCommand(
+    'init',
+    new Initialize($app)
+);
+
+$app->runCommand([$argv[0], 'init', ...array_slice($argv, 1)]);
+
+class Initialize
+{
+    private const FILES = [
+        'composer.json',
+        'tests/phpunit.xml.dist',
+        '.travis.yml',
+        'LICENSE',
+        'README.md',
+        'registration.php',
+    ];
+    /**
+     * @var Input
+     */
+    private $prompt;
+    /**
+     * @var OutputHandler
+     */
+    private $printer;
+
+    public function __construct(App $app)
+    {
+        $this->prompt = new Input('>');
+        $this->printer = $app->getPrinter();
+    }
+
+    private function getDefaultVariables(): array
+    {
+        $values = [
+            'vendor'           => 'acme',
+            'package'          => 'magento2-awesome-module',
+            'author-name'      => trim(`git config --get user.name`) ?: 'John Doe',
+            'author-email'     => trim(`git config --get user.email`) ?: 'john.doe@example.com',
+            'module-namespace' => 'Acme',
+            'module-name'      => 'AwesomeModule',
+            'company'          => 'ACME Inc.',
+            'year'             => date('Y'),
+        ];
+        return $values;
+    }
+
+    public function __invoke(CommandCall $input)
+    {
+        try {
+            $rootDir = $this->getRootDir($input);
+            $this->printer->info("Module directory: $rootDir");
+
+            $values = $this->getDefaultVariables();
+            do {
+                $values = $this->askValues($values);
+                $this->previewValues($values);
+            } while (!$this->confirm('Does that look right?'));
+
+            $this->replaceValues($rootDir, $values);
+            $this->success();
+        } catch (\Exception $e) {
+            $this->printer->error($e->getMessage());
+        }
+    }
+
+    private function getRootDir(CommandCall $input): string
+    {
+        $rootDir = ($input->args[2] ?? '');
+        if (strpos($rootDir, '/') !== 0) {
+            $rootDir = getcwd() . '/' . $rootDir;
+        }
+        if (realpath($rootDir) === false) {
+            throw new \RuntimeException('Path not found: ' . $rootDir);
+        }
+        return realpath($rootDir);
+    }
+
+    private function askValues(array $defaultValues): array
+    {
+        $values = [];
+        foreach ($defaultValues as $key => $default) {
+            $this->printer->out(str_replace('-', ' ', ucfirst($key)) . " [$default] ");
+            $values[':' . $key] = $this->prompt->read() ?: $default;
+        }
+        return $values;
+    }
+
+    private function previewValues(array $values): void
+    {
+        $this->printer->info('The following values will be replaced in package files:');
+        $this->printer->printTable(
+            array_merge(
+                [['placeholder', 'value']],
+                array_map(fn($key, $value) => [$key, $value], array_keys($values), $values)
+            )
+        );
+    }
+
+    private function confirm(string $question): bool
+    {
+        do {
+            $this->printer->out($question . ' [Y/N] ', 'alt');
+            $response = $this->prompt->read();
+        } while (trim($response) === '');
+        return !(stripos($response, 'Y') !== 0);
+    }
+
+    private function replaceValues(string $rootDir, array $values): void
+    {
+        $this->printer->info('Replacing values in files:', true);
+        foreach (self::FILES as $file) {
+            $file = $rootDir . '/' . $file;
+            $content = file_get_contents($file);
+            file_put_contents($file, strtr($content, $values));
+            $this->printer->out('✔ ' . substr($file, strlen($rootDir) + 1) . "\n", 'info');
+        }
+    }
+
+    private function success(): void
+    {
+        $this->printer->success('All values have been replaced. You may now remove the dev/ directory', true);
+    }
+}
+

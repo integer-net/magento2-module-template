@@ -1,0 +1,11 @@
+{
+    "bin" : [
+        "./bin/init"
+    ],
+    "require": {
+        "minicli/minicli": "^2.1"
+    },
+    "scripts": {
+        "build": "./phar-composer build . ./init"
+    }
+}
