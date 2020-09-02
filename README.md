@@ -5,13 +5,17 @@ This is a GitHub template. After creating a new repository with this template, r
 <!-- TEMPLATE -->
 
 # :module-namespace_:module-name Magento Module
+<div align="center">
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)
 [![Build Status][ico-travis]][link-travis]
+![Supported Magento Versions][ico-compatibility]
+
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Maintainability](ico-maintenability)](link-maintainability)
+</div>
 
 ---
 
@@ -80,6 +84,7 @@ The MIT License (MIT). Please see [License File](LICENSE) for more information.
 [ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/:vendor/:package?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/:vendor/:package.svg?style=flat-square
 [ico-maintainability]: https://img.shields.io/codeclimate/maintainability/:vendor/:package?style=flat-square
+[ico-compatibility]: https://img.shields.io/badge/magento-2.3%20|%202.4-brightgreen.svg?logo=magento&longCache=true&style=flat-square
 
 [link-packagist]: https://packagist.org/packages/:vendor/:package
 [link-travis]: https://travis-ci.org/:vendor/:package
