@@ -173,6 +173,7 @@ class Initialize
         $this->removeDevDirectory();
         $this->commitChanges();
         $this->installDependencies();
+        $this->connectServices();
     }
 
     private function removeDevDirectory()
@@ -209,6 +210,21 @@ class Initialize
                 [
                     "🔸 Install dependencies:",
                     "\tcomposer install --dev",
+                ]
+            )
+        );
+    }
+
+    private function connectServices()
+    {
+        $this->printer->success(
+            implode(
+                "\n",
+                [
+                    "🔸 Connect the following services with the Github repository:",
+                    "\t- Travis CI to run tests: https://travis-ci.org/",
+                    "\t- Scrutinizer for code quality and test coverage: https://scrutinizer-ci.com/",
+                    "\t- Code Climate for more code quality: https://codeclimate.com/"
                 ]
             )
         );
