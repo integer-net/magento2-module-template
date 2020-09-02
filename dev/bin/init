@@ -47,6 +47,8 @@ class Initialize
             'README.md',
             'CONTRIBUTING.md',
             'registration.php',
+            'tests/integration/ExampleTest.php',
+            'tests/unit/ExampleTest.php',
         ];
     }
 
