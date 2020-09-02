@@ -51,6 +51,7 @@ class Initialize
             'src/etc/module.xml',
             'tests/integration/ExampleTest.php',
             'tests/unit/ExampleTest.php',
+            'tests/src/ExampleTestDataBuilder.php',
         ];
     }
 

@@ -20,7 +20,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            ":module-namespace\\:module-name\\": "tests"
+            ":module-namespace\\:module-name\\": "tests/src"
         }
     },
     "repositories": [
