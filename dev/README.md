@@ -17,3 +17,23 @@ It takes the root directory as optional argument, so if you run the script from 
 ```
 
 **The `/dev/` directory can be removed after initialization!**
+
+## Developing the template
+
+### Adding placeholders
+
+To add new placeholders, adjust the initialization script:
+
+In `dev`, run:
+```
+composer install
+``` 
+
+Change the script in `dev/bin/init`
+
+Files where placeholders are replaced are defined in `getFilesToUpdate()`, placeholders with their default values in `getDefaultVariables()`
+
+To update the PHAR archive, run in `dev`:
+```
+composer build
+```

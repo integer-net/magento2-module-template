@@ -6,6 +6,6 @@
         "minicli/minicli": "^2.1"
     },
     "scripts": {
-        "build": "./phar-composer build . ./init"
+        "build": "./bin/phar-composer build . ./init"
     }
 }

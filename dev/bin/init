@@ -28,14 +28,6 @@ $app->runCommand([$argv[0], 'init', ...array_slice($argv, 1)]);
 
 class Initialize
 {
-    private const FILES = [
-        'composer.json',
-        'tests/phpunit.xml.dist',
-        '.travis.yml',
-        'LICENSE',
-        'README.md',
-        'registration.php',
-    ];
     /**
      * @var Input
      */
@@ -45,10 +37,16 @@ class Initialize
      */
     private $printer;
 
-    public function __construct(App $app)
+    private function getFilesToUpdate(): array
     {
-        $this->prompt = new Input('>');
-        $this->printer = $app->getPrinter();
+        return [
+            'composer.json',
+            'tests/phpunit.xml.dist',
+            '.travis.yml',
+            'LICENSE',
+            'README.md',
+            'registration.php',
+        ];
     }
 
     private function getDefaultVariables(): array
@@ -64,6 +62,12 @@ class Initialize
             'year'             => date('Y'),
         ];
         return $values;
+    }
+
+    public function __construct(App $app)
+    {
+        $this->prompt = new Input('>');
+        $this->printer = $app->getPrinter();
     }
 
     public function __invoke(CommandCall $input)
@@ -130,7 +134,7 @@ class Initialize
     private function replaceValues(string $rootDir, array $values): void
     {
         $this->printer->info('Replacing values in files:', true);
-        foreach (self::FILES as $file) {
+        foreach ($this->getFilesToUpdate() as $file) {
             $file = $rootDir . '/' . $file;
             $content = file_get_contents($file);
             file_put_contents($file, strtr($content, $values));
