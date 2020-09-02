@@ -4,7 +4,7 @@ This is a GitHub template. After creating a new repository with this template, r
 
 <!-- TEMPLATE -->
 
-# :namespace_:module-name Magento Module
+# :module-namespace_:module-name Magento Module
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE.md)

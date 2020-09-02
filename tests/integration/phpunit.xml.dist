@@ -10,7 +10,7 @@
          bootstrap="./framework/bootstrap.php"
 >
     <testsuites>
-        <testsuite name=":namespace_:module-name Integration Tests">
+        <testsuite name=":module-namespace_:module-name Integration Tests">
             <directory suffix="Test.php">../../../vendor/:vendor/:package/tests/integration</directory>
         </testsuite>
     </testsuites>
