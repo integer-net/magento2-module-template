@@ -45,6 +45,7 @@ class Initialize
             '.travis.yml',
             'LICENSE',
             'README.md',
+            'CONTRIBUTING.md',
             'registration.php',
         ];
     }
