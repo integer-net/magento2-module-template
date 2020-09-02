@@ -83,6 +83,7 @@ class Initialize
             } while (!$this->confirm('Does that look right?'));
 
             $this->replaceValues($rootDir, $values);
+            $this->removeReadmeSection($rootDir);
             $this->success();
         } catch (\Exception $e) {
             $this->printer->error($e->getMessage());
@@ -140,6 +141,19 @@ class Initialize
             file_put_contents($file, strtr($content, $values));
             $this->printer->out('✔ ' . substr($file, strlen($rootDir) + 1) . "\n", 'info');
         }
+    }
+
+    /**
+     * Removes everything until <!-- TEMPLATE --> from README.md
+     * @param string $rootDir
+     */
+    private function removeReadmeSection(string $rootDir)
+    {
+        $readmeFile = $rootDir . '/README.md';
+        $content = file_get_contents($readmeFile);
+        $separator = "<!-- TEMPLATE -->\n\n";
+        file_put_contents($readmeFile, substr($content, strpos($content, $separator) + strlen($separator)));
+        $this->printer->out('✔ ' . "README.md template section removed\n", 'info');
     }
 
     private function success(): void
