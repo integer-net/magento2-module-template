@@ -61,6 +61,7 @@ class Initialize
             'package'          => 'magento2-awesome-module',
             'author-name'      => trim(`git config --get user.name`) ?: 'John Doe',
             'author-email'     => trim(`git config --get user.email`) ?: 'john.doe@example.com',
+            'author-github'    => 'integer-net',
             'module-namespace' => 'Acme',
             'module-name'      => 'AwesomeModule',
             'company'          => 'ACME Inc.',
