@@ -58,12 +58,12 @@ class Initialize
     private function getDefaultVariables(): array
     {
         $values = [
-            'vendor'           => 'acme',
+            'vendor'           => 'acme-inc',
             'package'          => 'magento2-awesome-module',
             'description'      => 'This module is awesome!',
             'author-name'      => trim(`git config --get user.name`) ?: 'John Doe',
             'author-email'     => trim(`git config --get user.email`) ?: 'john.doe@example.com',
-            'author-github'    => 'integer-net',
+            'author-github'    => 'acme-developer',
             'module-namespace' => 'Acme',
             'module-name'      => 'AwesomeModule',
             'company'          => 'ACME Inc.',
