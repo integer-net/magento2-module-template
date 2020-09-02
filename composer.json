@@ -1,0 +1,44 @@
+{
+    "name": ":vendor/:package",
+    "description": ":description",
+    "type": "magento2-module",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": ":author-name",
+            "email": ":author-email"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            ":module-namespace\\:module-name\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            ":module-namespace\\:module-name\\": "tests"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ],
+    "require": {
+        "php": "^7.1",
+        "magento/framework": "^102.0|^103.0"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-master",
+        "phpunit/phpunit": "^6.0|^9.0",
+        "pds/skeleton": "^1.0",
+        "phpro/grumphp": "^v0.21.0",
+        "phpstan/phpstan": "^0.12.0",
+        "squizlabs/php_codesniffer": "^3.5"
+    }
+}

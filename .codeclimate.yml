@@ -1,0 +1,22 @@
+---
+engines:
+  duplication:
+    enabled: true
+  fixme:
+    enabled: true
+  phpmd:
+    enabled: true
+    checks:
+      CleanCode/StaticAccess:
+        enabled: false
+  phan:
+    enabled: true
+    config:
+      file_extensions: "php"
+      ignore-undeclared: true
+ratings:
+  paths:
+  - "**.php"
+exclude_paths:
+- tests/
+- vendor/
