@@ -12,3 +12,6 @@ grumphp:
               forbidden_function_calls:
                   blacklist:
                       - 'var_dump'
+      deptrac:
+          depfile: depfile.yml
+          formatter_graphviz: true

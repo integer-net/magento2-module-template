@@ -1,0 +1,94 @@
+paths:
+  - ./src
+layers:
+  - name: Controller
+    collectors:
+      - type: className
+        regex: .*\\Controller\\.*
+  - name: Command
+    collectors:
+      - type: className
+        regex: .*\\Console\\.*
+      - type: className
+        regex: .*\\Cron\\.*
+  - name: View
+    collectors:
+      - type: className
+        regex: .*\\Block\\.*
+      - type: className
+        regex: .*\\Ui\\Component\\.*
+      - type: className
+        regex: .*\\ViewModel\\.*
+  - name: Plugin
+    collectors:
+      - type: className
+        regex: .*\\Observer\\.*
+      - type: className
+        regex: .*\\Plugin\\.*
+      - type: className
+        regex: .*\\.*Plugin
+  - name: ServiceContract
+    collectors:
+      - type: className
+        regex: .*\\Api\\.*
+      - type: className
+        regex: .*Interface$
+#      - type: docblock
+#        name: api
+#        regex: .*
+  - name: Model
+    collectors:
+      - type: bool
+        must:
+          - type: className
+            regex: .*\\Model\\.*
+          - type: className
+            regex: .*\\Helper\\.*
+        must_not:
+          - type: className
+            regex: .*\\ResourceModel\\.*
+          - type: className
+            regex: .*Repository$
+          - type: className
+            regex: .*Interface$
+      - type: className
+        regex: .*\\Service\\.*
+  - name: Repository
+    collectors:
+      - type: className
+        regex: .*\\Model\\.*Repository$
+  - name: ResourceModel
+    collectors:
+      - type: bool
+        must:
+          - type: className
+            regex: .*\\ResourceModel\\.*
+        must_not:
+          - type: className
+            regex: .*Repository
+  - name: Infrastructure
+    collectors:
+      - type: className
+        regex: Magento\\Framework\\DB\\.*
+      - type: className
+        regex: Magento\\Framework\\Model\\ResourceModel\\Db\\.*
+ruleset:
+  Controller:
+    - ServiceContract
+  Command:
+    - ServiceContract
+  View:
+    - ServiceContract
+  Plugin:
+    - ServiceContract
+  Model:
+    - ServiceContract
+    - ResourceModel
+  Repository:
+    - ServiceContract
+    - Model
+    - ResourceModel
+  ResourceModel:
+    - ServiceContract
+    - Model
+    - Infrastructure
