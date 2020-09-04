@@ -1,4 +1,5 @@
 <?php
+
 namespace IntegerNet\ModuleTemplate;
 
 use Minicli\App;
@@ -41,7 +42,7 @@ class Initialize
 
             $this->replaceValues($rootDir, $values);
             $this->removeReadmeSection($rootDir);
-            $this->success();
+            $this->success($values);
         } catch (\Exception $e) {
             $this->printer->error($e->getMessage());
         }
@@ -131,13 +132,14 @@ class Initialize
         $this->printer->out('✔ ' . "README.md template section removed\n", 'info');
     }
 
-    private function success(): void
+    private function success(array $values): void
     {
         $this->printer->success('All values have been replaced. Your next steps should be:', true);
         $this->removeDevDirectory();
         $this->commitChanges();
-        $this->installDependencies();
         $this->connectServices();
+        $this->startCoding($values);
+        $this->installDependencies($values);
     }
 
     private function removeDevDirectory()
@@ -159,21 +161,8 @@ class Initialize
             implode(
                 "\n",
                 [
-                    "🔸 Commit:",
-                    "\tgit add -A && git commit",
-                ]
-            )
-        );
-    }
-
-    private function installDependencies()
-    {
-        $this->printer->success(
-            implode(
-                "\n",
-                [
-                    "🔸 Install dependencies:",
-                    "\tcomposer install --dev",
+                    "🔸 Commit and push initial version:",
+                    "\tgit add -A && git commit -m 'Initial version' && git push origin master",
                 ]
             )
         );
@@ -189,6 +178,33 @@ class Initialize
                     "\t- Travis CI to run tests: https://travis-ci.org/",
                     "\t- Scrutinizer for code quality and test coverage: https://scrutinizer-ci.com/",
                     "\t- Code Climate for more code quality: https://codeclimate.com/",
+                ]
+            )
+        );
+    }
+
+    private function startCoding(array $values)
+    {
+        $this->printer->success(
+            implode(
+                "\n",
+                [
+                    "🔸 Install module IN A MAGENTO INSTALLATION to start developing:",
+                    "\tcomposer require --prefer-src {$values[':vendor']}/{$values[':package']} dev-master",
+                    "\n🔸 Now you have the Git repository in vendor/{$values[':vendor']}/{$values[':package']}."
+                ]
+            )
+        );
+    }
+
+    private function installDependencies()
+    {
+        $this->printer->success(
+            implode(
+                "\n",
+                [
+                    "🔸 Install dev dependencies IN THAT DIRECTORY for automatic code quality checks with GrumPHP:",
+                    "\tcomposer install --dev",
                 ]
             )
         );
