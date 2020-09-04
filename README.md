@@ -1,6 +1,16 @@
 # integer_net Magento 2 Module Template
 
-This is a GitHub template. After creating a new repository with this template, run `/dev/init` for automatic configuration. For more information, see [dev/README.md](dev/README.md)
+This is a GitHub template.
+
+**Create your module now with the "use this template" button:**
+
+[![Use this template](dev/use-this-template.png)](https://github.com/integer-net/magento2-module-template/generate)
+
+After that, clone it on your machine and run `/dev/init` for automatic configuration. For more information, see [dev/README.md](dev/README.md)
+
+---
+
+---
 
 <!-- TEMPLATE -->
 
