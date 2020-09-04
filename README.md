@@ -19,7 +19,7 @@ This is a GitHub template. After creating a new repository with this template, r
 
 ---
 
-Here goes a short description what the module does and for whom it is useful. 
+:description
 
 ## Installation
 
