@@ -134,43 +134,48 @@ class Initialize
 
     private function success(array $values): void
     {
-        $this->printer->success('All values have been replaced. Your next steps should be:', true);
+        $this->printer->success(
+            implode(
+                "\n",
+                [
+                    "┌──────────────────────────────────────────────────────────────┐",
+                    "│ 🔽 All values have been replaced. Your next steps should be: │",
+                    "└──────────────────────────────────────────────────────────────┘",
+                ]
+            )
+        );
         $this->removeDevDirectory();
         $this->commitChanges();
         $this->connectServices();
         $this->startCoding($values);
-        $this->installDependencies($values);
+        $this->installDependencies();
+        $this->printer->success(
+            implode(
+                "\n",
+                [
+                    "┌──────────────────────────────────────────────────────────────┐",
+                    "│ 🔼 Almost done! Please read your next steps above carefully! │",
+                    "└──────────────────────────────────────────────────────────────┘",
+                ]
+            )
+        );
     }
 
     private function removeDevDirectory()
     {
-        $this->printer->success(
-            implode(
-                "\n",
-                [
-                    "🔸 Remove the dev directory:",
-                    "\trm -rf ./dev",
-                ]
-            )
-        );
+        $this->printer->out("🔸 Remove the dev directory:", 'info');
+        $this->printer->display("\trm -rf ./dev\n");
     }
 
     private function commitChanges()
     {
-        $this->printer->success(
-            implode(
-                "\n",
-                [
-                    "🔸 Commit and push initial version:",
-                    "\tgit add -A && git commit -m 'Initial version' && git push origin master",
-                ]
-            )
-        );
+        $this->printer->out("🔸 Commit and push initial version:", 'info');
+        $this->printer->display("\tgit add -A && git commit -m 'Initial version' && git push origin master\n");
     }
 
     private function connectServices()
     {
-        $this->printer->success(
+        $this->printer->out(
             implode(
                 "\n",
                 [
@@ -178,35 +183,31 @@ class Initialize
                     "\t- Travis CI to run tests: https://travis-ci.org/",
                     "\t- Scrutinizer for code quality and test coverage: https://scrutinizer-ci.com/",
                     "\t- Code Climate for more code quality: https://codeclimate.com/",
+                    "\n",
                 ]
-            )
+            ),
+            'info'
         );
     }
 
     private function startCoding(array $values)
     {
-        $this->printer->success(
-            implode(
-                "\n",
-                [
-                    "🔸 Install module IN A MAGENTO INSTALLATION to start developing:",
-                    "\tcomposer require --prefer-src {$values[':vendor']}/{$values[':package']} dev-master",
-                    "\n🔸 Now you have the Git repository in vendor/{$values[':vendor']}/{$values[':package']}."
-                ]
-            )
+        $this->printer->out("🔸 Install module IN A MAGENTO INSTALLATION to start developing:", 'info');
+        $this->printer->display(
+            "\tcomposer require --prefer-src {$values[':vendor']}/{$values[':package']} dev-master\n"
+        );
+        $this->printer->out(
+            "🔸 Now you have the Git repository in vendor/{$values[':vendor']}/{$values[':package']}\n\n",
+            'info'
         );
     }
 
     private function installDependencies()
     {
-        $this->printer->success(
-            implode(
-                "\n",
-                [
-                    "🔸 Install dev dependencies IN THAT DIRECTORY for automatic code quality checks with GrumPHP:",
-                    "\tcomposer install --dev",
-                ]
-            )
+        $this->printer->out(
+            "🔸 Install dev dependencies IN THAT DIRECTORY for automatic code quality checks with GrumPHP:",
+            'info'
         );
+        $this->printer->display("\tcomposer install --dev");
     }
 }
