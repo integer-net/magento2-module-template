@@ -37,44 +37,6 @@ class Initialize
      */
     private $printer;
 
-    private function getFilesToUpdate(): array
-    {
-        return [
-            'composer.json',
-            '.travis.yml',
-            'LICENSE',
-            'README.md',
-            'CONTRIBUTING.md',
-            'registration.php',
-            'src/ExampleClass.php',
-            'src/etc/module.xml',
-            'tests/integration/phpunit.xml.dist',
-            'tests/integration/ExampleTest.php',
-            'tests/unit/ExampleTest.php',
-            'tests/src/ExampleTestDataBuilder.php',
-        ];
-    }
-
-    private function getDefaultVariables(): array
-    {
-        /**
-         * @todo Allow storing default variables in environment or git config
-         */
-        $values = [
-            ':vendor'           => 'acme-inc',
-            ':package'          => 'magento2-awesome-module',
-            ':description'      => 'This module is awesome!',
-            ':author-name'      => trim(`git config --get user.name`) ?: 'John Doe',
-            ':author-email'     => trim(`git config --get user.email`) ?: 'john.doe@example.com',
-            ':author-github'    => 'acme-developer',
-            ':module-namespace' => 'Acme',
-            ':module-name'      => 'AwesomeModule',
-            ':company'          => 'ACME Inc.',
-            ':year'             => date('Y'),
-        ];
-        return $values;
-    }
-
     public function __construct(App $app)
     {
         $this->prompt = new Input('>');
@@ -87,11 +49,12 @@ class Initialize
             $rootDir = $this->getRootDir($input);
             $this->printer->info("Module directory: $rootDir");
 
-            $values = $this->getDefaultVariables();
+            $values = getDefaultVariables();
             do {
                 $values = $this->askValues($values);
                 $this->previewValues($values);
             } while (!$this->confirm('Does that look right?'));
+            $values += $this->askMagentoCompatibility();
 
             $this->replaceValues($rootDir, $values);
             $this->removeReadmeSection($rootDir);
@@ -143,10 +106,28 @@ class Initialize
         return !(stripos($response, 'Y') !== 0);
     }
 
+    private function askMagentoCompatibility(): array
+    {
+        $magentoVersions = [];
+        $magentoVersionConstraints = [];
+        foreach (getMagentoVersions() as $version => $constraints) {
+            if ($this->confirm("Compatible with Magento {$version}?")) {
+                $magentoVersions[] = $version;
+                $magentoVersionConstraints[] = $constraints;
+            }
+        }
+        $mergedConstraints = array_map('array_unique', array_merge_recursive(...$magentoVersionConstraints));
+        return [
+            ':php-constraint'       => implode('||', $mergedConstraints['php']),
+            ':framework-constraint' => implode('||', $mergedConstraints['magento-framework']),
+            ':version-badge'        => implode('%20|%20', $magentoVersions),
+        ];
+    }
+
     private function replaceValues(string $rootDir, array $values): void
     {
         $this->printer->info('Replacing values in files:', true);
-        foreach ($this->getFilesToUpdate() as $file) {
+        foreach (getFilesToUpdate() as $file) {
             $file = $rootDir . '/' . $file;
             $content = file_get_contents($file);
             file_put_contents($file, strtr($content, $values));
@@ -224,7 +205,7 @@ class Initialize
                     "🔸 Connect the following services with the Github repository:",
                     "\t- Travis CI to run tests: https://travis-ci.org/",
                     "\t- Scrutinizer for code quality and test coverage: https://scrutinizer-ci.com/",
-                    "\t- Code Climate for more code quality: https://codeclimate.com/"
+                    "\t- Code Climate for more code quality: https://codeclimate.com/",
                 ]
             )
         );

@@ -29,6 +29,6 @@ dev/init
 
 ### Adding placeholders
 
-To add new placeholders, adjust the initialization script in `dev/bin/init`
+To add new placeholders, adjust the initialization script config in `dev/bin/config.php`
 
 Files where placeholders are replaced are defined in `getFilesToUpdate()`, placeholders with their default values in `getDefaultVariables()`
