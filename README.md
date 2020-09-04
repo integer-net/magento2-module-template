@@ -8,7 +8,7 @@ This is a GitHub template.
 
 After that, clone it on your machine and run `/dev/init` for automatic configuration. For more information, see [dev/README.md](dev/README.md)
 
----
+<div align="center"><img src="https://www.integer-net.de/wp-content/uploads/2012/11/firmenprofil.jpg" alt="Waschbär Approved Module" /></div>
 
 ---
 
