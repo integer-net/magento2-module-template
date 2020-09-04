@@ -94,10 +94,15 @@ class Initialize
     {
         $magentoVersions = [];
         $magentoVersionConstraints = [];
-        foreach (Config::getMagentoVersions() as $version => $constraints) {
-            if ($this->confirm("Compatible with Magento {$version}?")) {
-                $magentoVersions[] = $version;
-                $magentoVersionConstraints[] = $constraints;
+        while (empty($magentoVersions)) {
+            foreach (Config::getMagentoVersions() as $version => $constraints) {
+                if ($this->confirm("Compatible with Magento {$version}?")) {
+                    $magentoVersions[] = $version;
+                    $magentoVersionConstraints[] = $constraints;
+                }
+            }
+            if (empty($magentoVersions)) {
+                $this->printer->error('Please select at least one Magento version');
             }
         }
         $mergedConstraints = array_map('array_unique', array_merge_recursive(...$magentoVersionConstraints));
