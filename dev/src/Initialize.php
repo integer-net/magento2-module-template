@@ -185,9 +185,10 @@ class Initialize
                 "\n",
                 [
                     "🔸 Connect the following services with the Github repository:",
+                    "\t- Packagist to make it available with composer: https://packagist.org/",
                     "\t- Travis CI to run tests: https://travis-ci.org/",
                     "\t- Scrutinizer for code quality and test coverage: https://scrutinizer-ci.com/",
-                    "\t- Code Climate for more code quality: https://codeclimate.com/",
+                    "\t- (optional) Code Climate for more code quality metrics: https://codeclimate.com/",
                     "\n",
                 ]
             ),
