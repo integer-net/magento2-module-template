@@ -6,6 +6,8 @@ To automatically replace all placeholders with custom values, run the following 
 dev/init
 ```
 
+**The `/dev/` directory can be removed after initialization!**
+
 ## Placeholders explained
 
 | Placeholder    | Purpose |
@@ -21,11 +23,11 @@ dev/init
 | Company | Full company name, used in LICENSE |
 | Year | Current year, used in LICENSE |
 
+## Magento Compatibility
 
+You are asked which Magento versions you want so support. Based on the answer, version constraints for `php` and `magento/framework` are initialized in `composer.json`. Feel free to change those later, for example if you don't want to support older PHP versions.
 
-**The `/dev/` directory can be removed after initialization!**
-
-## Developing the template
+# Developing the template
 
 ### Adding placeholders
 

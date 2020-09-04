@@ -30,8 +30,8 @@
         }
     ],
     "require": {
-        "php": "^7.1",
-        "magento/framework": "^102.0|^103.0"
+        "php": ":php-constraint",
+        "magento/framework": ":framework-constraint"
     },
     "require-dev": {
         "roave/security-advisories": "dev-master",
