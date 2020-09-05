@@ -17,6 +17,7 @@ class Config
         return [
             'composer.json',
             '.travis.yml',
+            '.travis/before_script.sh',
             'LICENSE',
             'README.md',
             'CONTRIBUTING.md',
