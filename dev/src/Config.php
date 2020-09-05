@@ -15,6 +15,7 @@ class Config
     public static function getFilesToUpdate(): array
     {
         return [
+            'auth.json',
             'composer.json',
             '.travis.yml',
             '.travis/before_script.sh',
@@ -53,16 +54,18 @@ class Config
         $moduleName = str_replace(merge([' '], $commonPrefixes), '', ucwords(str_replace(['-', '_'], ' ', $package)));
 
         return [
-            ':vendor'           => $vendor,
-            ':package'          => $package,
-            ':description'      => 'This module is awesome!',
-            ':author-name'      => $gitUserName ?: 'John Doe',
-            ':author-email'     => $gitUserEmail ?: 'john.doe@example.com',
-            ':author-github'    => $vendor,
-            ':module-namespace' => $moduleNamespace,
-            ':module-name'      => $moduleName,
-            ':company'          => $company,
-            ':year'             => (string)date('Y'),
+            ':magento-repo-public-key'  => '',
+            ':magento-repo-private-key' => '',
+            ':vendor'                   => $vendor,
+            ':package'                  => $package,
+            ':description'              => 'This module is awesome!',
+            ':author-name'              => $gitUserName ?: 'John Doe',
+            ':author-email'             => $gitUserEmail ?: 'john.doe@example.com',
+            ':author-github'            => $vendor,
+            ':module-namespace'         => $moduleNamespace,
+            ':module-name'              => $moduleName,
+            ':company'                  => $company,
+            ':year'                     => (string)date('Y'),
         ];
     }
 

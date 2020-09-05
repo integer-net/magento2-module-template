@@ -17,6 +17,8 @@ To learn about additional options, run `dev/init --help`.
 
 | Placeholder    | Purpose |
 | -------------- | ------- |
+| Magento Repo Public Key | Used for `auth.json` so that composer install works with repo.magento.com. See https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html how to obtain keys. <br>⚠ **The keys will be visible, so do not use an account used for commerce license or marketplace extensions!** |
+| Magento Repo Private Key | see above |
 | Vendor | Vendor name for composer package, should match the name of your GitHub user or organization |
 | Package | Package name for composer package |
 | Description | A short description what the module does and for whom it is useful. Placed at the top of the README and as description in `composer.json` |
