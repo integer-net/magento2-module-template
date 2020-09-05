@@ -12,6 +12,7 @@
     "./bin/init"
   ],
   "require": {
+    "php": "^7.4",
     "minicli/minicli": "^2.1"
   },
   "require-dev": {
