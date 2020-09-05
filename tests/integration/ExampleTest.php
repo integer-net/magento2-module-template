@@ -13,6 +13,6 @@ class ExampleTest extends TestCase
     /** @test */
     public function we_can_use_the_object_manager()
     {
-        $this->assertInstanceOf(Magento\TestFramework\ObjectManager::class, Bootstrap::getObjectManager());
+        $this->assertInstanceOf(\Magento\TestFramework\ObjectManager::class, Bootstrap::getObjectManager());
     }
 }

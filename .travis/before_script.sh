@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -ex
 trap '>&2 echo Error: Command \`$BASH_COMMAND\` on line $LINENO failed with exit code $?' ERR
 
 # mock mail
@@ -50,8 +50,11 @@ case $TEST_SUITE in
             SET @@global.sql_mode = NO_ENGINE_SUBSTITUTION;
             CREATE DATABASE magento_integration_tests;
         '
-        cp etc/install-config-mysql.travis.php.dist etc/install-config-mysql.php
+        cp etc/install-config-mysql.php.dist etc/install-config-mysql.php
+        # Remove AMQP configuration
         sed -i '/amqp/d' etc/install-config-mysql.php
+        # Remove default root password
+        sed -i 's/123123q//' etc/install-config-mysql.php
 
         cd ../../..
     ;;
