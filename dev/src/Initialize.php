@@ -116,14 +116,24 @@ class Initialize
                     "┌──────────────────────────────────────────────────┐",
                     "│ 🎆 Your open source module will be ready soon! 🎆│",
                     "└──────────────────────────────────────────────────┘",
-                    'First you need a key pair for repo.magento.com. Please see ' . $helpUrl . ' how to obtain keys.',
-                    'Why? The credentials will be stored in auth.json so that services like Scrutinizer can install the required Magento modules with composer.',
-                    'But you can also leave them empty for now and change auth.json manually later.',
+                    '🔑 First you need a key pair for repo.magento.com. To learn how to obtain keys,',
+                    '   see: ' . $helpUrl,
+                    '',
+                    '❓ Why? The credentials will be stored in auth.json so that services like',
+                    '   Scrutinizer can install the required Magento modules with composer.',
+                    '',
+                    '✏ But you can also leave them empty for now and change auth.json manually later.',
                 ]
             )
         );
         $this->printer->error(
-            '⚠ The keys will be visible, so do not use an account used for commerce license or marketplace extensions!'
+            implode(
+                "\n",
+                [
+                    "⚠ The keys will be visible, so do not use an account used for commerce license",
+                    "  or for marketplace extensions!"
+                ]
+            )
         );
     }
 
@@ -139,7 +149,7 @@ class Initialize
 
     private function previewValues(array $values): void
     {
-        $this->printer->info('The following values will be replaced in package files:');
+        $this->printer->info('🔄 The following values will be replaced in package files:');
         $this->printer->printTable(
             array_merge(
                 [['placeholder', 'value']],
@@ -159,7 +169,17 @@ class Initialize
 
     private function askMagentoCompatibility(): array
     {
-        $this->printer->info('Please specify which Magento versions you intend to support. Based on your answers, version constraints in composer.json and jobs in .travis.yml will be generated');
+        $this->printer->info(
+            implode(
+                "\n",
+                [
+                    '📦 Please specify which Magento versions you intend to support.',
+                    '   This will generate:',
+                    '   - Version constraints in composer.json',
+                    '   - Jobs in .travis.yml',
+                ]
+            )
+        );
         $magentoVersions = [];
         $magentoVersionConstraints = [];
         while (empty($magentoVersions)) {
@@ -254,10 +274,14 @@ class Initialize
                 "\n",
                 [
                     "🔸 Connect the following services with the Github repository:",
-                    "\t- Packagist to make it available with composer: https://packagist.org/packages/submit",
-                    "\t- Travis CI to run tests: https://travis-ci.org/organizations/{$values[':vendor']}/repositories",
-                    "\t- Scrutinizer for code quality and test coverage: https://scrutinizer-ci.com/g/new",
-                    "\t- (optional) Code Climate for more code quality metrics: https://codeclimate.com/github/repos/new",
+                    "   - Packagist to make it available with composer:",
+                    "     https://packagist.org/packages/submit",
+                    "   - Travis CI to run tests:",
+                    "     https://travis-ci.org/organizations/{$values[':vendor']}/repositories",
+                    "   - Scrutinizer for code quality and test coverage:",
+                    "     https://scrutinizer-ci.com/g/new",
+                    "   - (optional) Code Climate for more code quality metrics:",
+                    "     https://codeclimate.com/github/repos/new",
                     "\n",
                 ]
             ),
@@ -269,10 +293,11 @@ class Initialize
     {
         $this->printer->out("🔸 Install module IN A MAGENTO INSTALLATION to start developing:", 'info');
         $this->printer->display(
-            "\tcomposer require --prefer-source {$values[':vendor']}/{$values[':package']} dev-master\n"
+            "   composer require --prefer-source {$values[':vendor']}/{$values[':package']} dev-master\n"
         );
         $this->printer->out(
-            "🔸 Now you have the Git repository in vendor/{$values[':vendor']}/{$values[':package']}\n\n",
+            "🔸 Now you have the Git repository in\n".
+            "   vendor/{$values[':vendor']}/{$values[':package']}\n\n",
             'info'
         );
     }
@@ -280,9 +305,9 @@ class Initialize
     private function installDependencies()
     {
         $this->printer->out(
-            "🔸 Install dev dependencies IN THAT DIRECTORY for automatic code quality checks with GrumPHP:",
+            "🔸 Install dev dependencies IN THAT DIRECTORY for automatic code quality checks:",
             'info'
         );
-        $this->printer->display("\tcomposer install");
+        $this->printer->display("   composer install");
     }
 }
