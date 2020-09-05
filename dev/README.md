@@ -6,6 +6,9 @@ To automatically replace all placeholders with custom values, run the following 
 dev/init
 ```
 
+It runs interactively and tries to present you sensible default variables based on your repository.
+
+
 To learn about additional options, run `dev/init --help`. 
 
 **The `dev/` directory can be removed after initialization!**

@@ -1,5 +1,8 @@
 <?php
+
 namespace IntegerNet\ModuleTemplate;
+
+use function array_merge as merge;
 
 /**
  * These functions contain configuration for the init script
@@ -32,20 +35,32 @@ class Config
      */
     public static function getDefaultVariables(): array
     {
-        /**
-         * @todo Allow storing default variables in environment or git config
-         */
+        // Get author name and email from Git if possible
+        $gitUserName = trim(shell_exec('git config --get user.name'));
+        $gitUserEmail = trim(shell_exec('git config --get user.email'));
+
+        // Get vendor and package from Github URI if possible (matches HTTPS and SSH)
+        preg_match('#github\.com[:/]([^/]+)/(.*)\.git#', shell_exec('git remote get-url origin'), $matches);
+        $vendor = $matches[1] ?? 'acme-inc';
+        $package = $matches[2] ?? 'magento2-awesome-module';
+
+        // Guess company, namespace and module name based on vendor and package
+        $company = ucwords(str_replace('-', ' ', $vendor));
+        $moduleNamespace = str_replace(' ', '', $company);
+        $commonPrefixes = self::getCommonModulePrefixes($moduleNamespace);
+        $moduleName = str_replace(merge([' '], $commonPrefixes), '', ucwords(str_replace(['-', '_'], ' ', $package)));
+
         return [
-            ':vendor'             => 'acme-inc',
-            ':package'            => 'magento2-awesome-module',
-            ':description'        => 'This module is awesome!',
-            ':author-name'        => trim(`git config --get user.name`) ?: 'John Doe',
-            ':author-email'       => trim(`git config --get user.email`) ?: 'john.doe@example.com',
-            ':author-github'      => 'acme-developer',
-            ':module-namespace'   => 'Acme',
-            ':module-name'        => 'AwesomeModule',
-            ':company'            => 'ACME Inc.',
-            ':year'               => (string)date('Y'),
+            ':vendor'           => $vendor,
+            ':package'          => $package,
+            ':description'      => 'This module is awesome!',
+            ':author-name'      => $gitUserName ?: 'John Doe',
+            ':author-email'     => $gitUserEmail ?: 'john.doe@example.com',
+            ':author-github'    => $vendor,
+            ':module-namespace' => $moduleNamespace,
+            ':module-name'      => $moduleName,
+            ':company'          => $company,
+            ':year'             => (string)date('Y'),
         ];
     }
 
@@ -55,13 +70,13 @@ class Config
      *
      * The following placeholder values will be generated automatically based on choosen compatible versions:
      *
+     * @return string[][][] Associative array with Magento versions and dependencies for composer
      * @see Initialize::askMagentoCompatibility()
      *
      *  :php-constraint         Composer version constraint for PHP
      *  :framework-constraint   Composer version constraint for Magento framework
      *  :version-badge          Text for the "Magento" compatibility badge
      *
-     * @return string[][][] Associative array with Magento versions and dependencies for composer
      */
     public static function getMagentoVersions(): array
     {
@@ -79,5 +94,21 @@ class Config
                 'magento-framework' => ['^103.0.0'],
             ],
         ];
+    }
+
+    /**
+     * package prefixes that should not be part of the module name (capitalized because used after ucwords())
+     *
+     * This covers e.g.:
+     *
+     *      magento2-
+     *      magento2-module
+     *
+     * @param string $moduleNamespace
+     * @return string[]
+     */
+    private static function getCommonModulePrefixes(string $moduleNamespace): array
+    {
+        return ['Magento2', 'Module', $moduleNamespace];
     }
 }
