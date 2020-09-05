@@ -24,7 +24,7 @@ After that, clone it on your machine and run `/dev/init` for automatic configura
 
 [![Coverage Status][ico-scrutinizer]][link-scrutinizer]
 [![Quality Score][ico-code-quality]][link-code-quality]
-[![Maintainability](ico-maintenability)](link-maintainability)
+[![Maintainability][ico-maintainability]][link-maintainability]
 </div>
 
 ---
