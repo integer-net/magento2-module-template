@@ -10,6 +10,9 @@ build:
       - true
   nodes:
     analysis:
+      dependencies:
+        after:
+          - vendor/bin/phpcs --config-set installed_paths ../../magento/magento-coding-standard/ # Scrutinizer does not run composer scripts
       tests:
         override:
           - php-scrutinizer-run
