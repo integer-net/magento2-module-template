@@ -26,6 +26,7 @@ class Config
             'tests/integration/phpunit.xml.dist',
             'tests/integration/ExampleTest.php',
             'tests/unit/ExampleTest.php',
+            'tests/unit/phpunit.xml.dist',
             'tests/src/ExampleTestDataBuilder.php',
         ];
     }
