@@ -23,15 +23,7 @@
     </php>
     <filter>
         <whitelist>
-            <directory suffix=".php">../../../app/code/*</directory>
-            <directory suffix=".php">../../../lib/internal/Magento</directory>
-            <directory suffix=".php">../../../setup/src/*</directory>
-            <exclude>
-                <directory>../../../app/code/*/*/Test</directory>
-                <directory>../../../lib/internal/*/*/Test</directory>
-                <directory>../../../lib/internal/*/*/*/Test</directory>
-                <directory>../../../setup/src/*/*/Test</directory>
-            </exclude>
+            <directory suffix=".php">../../../vendor/:vendor/:package/src/*</directory>
         </whitelist>
     </filter>
     <listeners>
