@@ -133,6 +133,7 @@ class Initialize
         return !(stripos($response, 'Y') !== 0);
     }
 
+    //TODO generate Travis build matrix based on answers
     private function askMagentoCompatibility(): array
     {
         $magentoVersions = [];
@@ -194,7 +195,7 @@ class Initialize
         );
         $this->removeDevDirectory();
         $this->commitChanges();
-        $this->connectServices();
+        $this->connectServices($values);
         $this->startCoding($values);
         $this->installDependencies();
         $this->printer->success(
@@ -218,20 +219,20 @@ class Initialize
     private function commitChanges()
     {
         $this->printer->out("🔸 Commit and push initial version:", 'info');
-        $this->printer->display("\tgit add -A && git commit -m 'Initial version' && git push origin master\n");
+        $this->printer->display("\tgit add -A && git commit -m 'Replace placholders' && git push origin master\n");
     }
 
-    private function connectServices()
+    private function connectServices(array $values)
     {
         $this->printer->out(
             implode(
                 "\n",
                 [
                     "🔸 Connect the following services with the Github repository:",
-                    "\t- Packagist to make it available with composer: https://packagist.org/",
-                    "\t- Travis CI to run tests: https://travis-ci.org/",
-                    "\t- Scrutinizer for code quality and test coverage: https://scrutinizer-ci.com/",
-                    "\t- (optional) Code Climate for more code quality metrics: https://codeclimate.com/",
+                    "\t- Packagist to make it available with composer: https://packagist.org/packages/submit",
+                    "\t- Travis CI to run tests: https://travis-ci.org/organizations/{$values[':vendor']}/repositories",
+                    "\t- Scrutinizer for code quality and test coverage: https://scrutinizer-ci.com/g/new",
+                    "\t- (optional) Code Climate for more code quality metrics: https://codeclimate.com/github/repos/new",
                     "\n",
                 ]
             ),
@@ -243,7 +244,7 @@ class Initialize
     {
         $this->printer->out("🔸 Install module IN A MAGENTO INSTALLATION to start developing:", 'info');
         $this->printer->display(
-            "\tcomposer require --prefer-src {$values[':vendor']}/{$values[':package']} dev-master\n"
+            "\tcomposer require --prefer-source {$values[':vendor']}/{$values[':package']} dev-master\n"
         );
         $this->printer->out(
             "🔸 Now you have the Git repository in vendor/{$values[':vendor']}/{$values[':package']}\n\n",
@@ -257,6 +258,6 @@ class Initialize
             "🔸 Install dev dependencies IN THAT DIRECTORY for automatic code quality checks with GrumPHP:",
             'info'
         );
-        $this->printer->display("\tcomposer install --dev");
+        $this->printer->display("\tcomposer install");
     }
 }
