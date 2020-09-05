@@ -6,6 +6,7 @@ use Minicli\App;
 use Minicli\Command\CommandCall;
 use Minicli\Input;
 use Minicli\Output\OutputHandler;
+use Nette\Neon\Neon;
 
 /**
  * This invokable class is executed from the init script
@@ -117,11 +118,13 @@ class Initialize
                     "└──────────────────────────────────────────────────┘",
                     'First you need a key pair for repo.magento.com. Please see ' . $helpUrl . ' how to obtain keys.',
                     'Why? The credentials will be stored in auth.json so that services like Scrutinizer can install the required Magento modules with composer.',
-                    'But you can also leave them empty for now and change auth.json manually later.'
+                    'But you can also leave them empty for now and change auth.json manually later.',
                 ]
             )
         );
-        $this->printer->error('⚠ The keys will be visible, so do not use an account used for commerce license or marketplace extensions!');
+        $this->printer->error(
+            '⚠ The keys will be visible, so do not use an account used for commerce license or marketplace extensions!'
+        );
     }
 
     private function askValues(array $defaultValues): array
@@ -176,6 +179,7 @@ class Initialize
             ':php-constraint'       => implode('||', $mergedConstraints['php']),
             ':framework-constraint' => implode('||', $mergedConstraints['magento-framework']),
             ':version-badge'        => implode('%20|%20', $magentoVersions),
+            ':travis-jobs'          => TravisJob::getTravisJobConfiguration($magentoVersions),
         ];
     }
 

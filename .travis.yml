@@ -10,35 +10,7 @@ addons:
   hosts:
     - magento2.travis
 language: php
-jobs:
-  include:
-    - php: 7.3
-      env:
-        - MAGENTO_VERSION=2.3
-        - TEST_SUITE=integration
-    - php: 7.3
-      env:
-        - MAGENTO_VERSION=2.3
-        - TEST_SUITE=unit
-    - php: 7.4
-      env:
-        - MAGENTO_VERSION=2.4
-        - TEST_SUITE=integration
-        - COVERAGE=true
-    - php: 7.4
-      env:
-        - MAGENTO_VERSION=2.4-develop
-        - TEST_SUITE=integration
-    - php: 7.4
-      env:
-        - MAGENTO_VERSION=2.4
-        - TEST_SUITE=unit
-        - COVERAGE=true
-  allow_failures:
-    - php: 7.4
-      env:
-        - MAGENTO_VERSION=2.4-develop
-        - TEST_SUITE=integration
+:travis-jobs
 env:
   global:
     - COMPOSER_BIN_DIR=~/bin
