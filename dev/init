@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 cd $(realpath $(dirname $0))
 [ -d vendor  ] || composer install
-./bin/init ..
+./bin/init .. $@

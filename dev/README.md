@@ -6,7 +6,9 @@ To automatically replace all placeholders with custom values, run the following 
 dev/init
 ```
 
-**The `/dev/` directory can be removed after initialization!**
+To learn about additional options, run `dev/init --help`. 
+
+**The `dev/` directory can be removed after initialization!**
 
 ## Placeholders explained
 

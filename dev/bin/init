@@ -10,11 +10,7 @@ require __DIR__ . '/../vendor/autoload.php';
 use Minicli\App;
 use IntegerNet\ModuleTemplate\Initialize;
 
-$app = new App(
-    [
-        'theme' => '\Unicorn',
-    ]
-);
+$app = new App;
 $app->setSignature('./' . __FILE__ . '');
 
 $app->registerCommand(

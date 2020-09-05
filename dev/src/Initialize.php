@@ -20,15 +20,27 @@ class Initialize
      * @var OutputHandler
      */
     private $printer;
+    /**
+     * @var App
+     */
+    private App $app;
 
     public function __construct(App $app)
     {
+        $this->app = $app;
         $this->prompt = new Input('>');
         $this->printer = $app->getPrinter();
     }
 
     public function __invoke(CommandCall $input)
     {
+        $this->configureFromFlags($input);
+
+        if ($input->hasFlag('--help') || $input->hasFlag('-h') || $input->hasParam('help')) {
+            $this->showHelp();
+            return;
+        }
+
         try {
             $rootDir = $this->getRootDir($input);
             $this->printer->info("Module directory: $rootDir");
@@ -45,6 +57,37 @@ class Initialize
             $this->success($values);
         } catch (\Exception $e) {
             $this->printer->error($e->getMessage());
+        }
+    }
+
+    private function showHelp()
+    {
+        $README = 'file://' . dirname(__DIR__) . '/README.md';
+        $this->printer->info('The init script replaces all placeholders in the template for you interactively');
+        $this->printer->info("You can find an explanation of the placeholders in dev/README.md if needed.");
+        $this->printer->display("\t{$README}");
+        $this->printer->info('Options:');
+        $this->printer->info(
+            implode(
+                "\n",
+                [
+                    "\t--unicorn\tUse a more colorful theme",
+                    "\t--no-ansi\tDo not use colors",
+                    "\t--help | -h\tShow this help"
+                ]
+            )
+        );
+    }
+
+    private function configureFromFlags(CommandCall $input): void
+    {
+        if ($input->hasFlag('--unicorn')) {
+            $this->app->setTheme('\Unicorn');
+            // Registering a theme initializes a new printer instance
+            $this->printer = $this->app->getPrinter();
+        }
+        if ($input->hasFlag('--no-ansi')) {
+            $this->printer->clearFilters();
         }
     }
 
