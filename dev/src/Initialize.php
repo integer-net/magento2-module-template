@@ -157,10 +157,9 @@ class Initialize
         return !(stripos($response, 'Y') !== 0);
     }
 
-    //TODO generate Travis build matrix based on answers
-
     private function askMagentoCompatibility(): array
     {
+        $this->printer->info('Please specify which Magento versions you intend to support. Based on your answers, version constraints in composer.json and jobs in .travis.yml will be generated');
         $magentoVersions = [];
         $magentoVersionConstraints = [];
         while (empty($magentoVersions)) {
