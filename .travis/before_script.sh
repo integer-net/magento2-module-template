@@ -23,11 +23,15 @@ cd magento2
 
 # add composer package under test, composer require will trigger update/install
 composer config minimum-stability dev
-composer config repositories.travis_to_test git https://github.com/$TRAVIS_REPO_SLUG.git
-
+composer config repositories.travis_to_test git https://github.com/${TRAVIS_REPO_SLUG}.git
 if [ ! -z $TRAVIS_TAG  ]
 then
     composer require ${COMPOSER_PACKAGE_NAME}:${TRAVIS_TAG}
+elif [ ! -z $TRAVIS_PULL_REQUEST_BRANCH ]
+then
+    # For pull requests, use the remote repository
+    composer config repositories.travis_to_test git https://github.com/${TRAVIS_PULL_REQUEST_SLUG}.git
+    composer require ${COMPOSER_PACKAGE_NAME}:dev-${TRAVIS_PULL_REQUEST_BRANCH}\#${TRAVIS_PULL_REQUEST_SHA}
 else
     composer require ${COMPOSER_PACKAGE_NAME}:dev-${TRAVIS_BRANCH}\#${TRAVIS_COMMIT}
 fi
