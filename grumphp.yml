@@ -1,9 +1,7 @@
 grumphp:
     tasks:
       composer: []
-      phpcs:
-          standard: 'PSR2'
-          encoding: utf-8
+      phpcs: ~
       phpstan:
           configuration: phpstan.neon
       phpparser:

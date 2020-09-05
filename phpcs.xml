@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <ruleset>
+    <!-- Tests do not follow the same coding standards, e.g. method names do not need to be PSR-2 compatible -->
+    <exclude-pattern>tests/</exclude-pattern>
     <rule ref="PSR1"/>
     <rule ref="PSR2"/>
 </ruleset>
