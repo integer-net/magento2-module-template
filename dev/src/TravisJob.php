@@ -29,7 +29,7 @@ class TravisJob
         ],
     ];
 
-    public static function getTravisJobConfiguration(array $magentoVersions)
+    public static function getConfiguration(array $magentoVersions)
     {
         $versionConstraints = Config::getMagentoVersions();
         $jobs = [];

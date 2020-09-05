@@ -71,7 +71,9 @@ class Config
 
     /**
      * Exact PHP requirements are already handled by magento/framework itself, but making it explicit allows the module
-     * author to tighten the constraints, e.g. make the module work with Magento 2.3 but still require at least PHP 7.3
+     * author to tighten the constraints, e.g. make the module work with Magento 2.3 but still require at least PHP 7.3.
+     *
+     * Also, the supported PHP versions are used by {@see TravisJob::getConfiguration()} to generate Travis jobs.
      *
      * The following placeholder values will be generated automatically based on choosen compatible versions:
      *

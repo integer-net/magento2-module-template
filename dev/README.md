@@ -32,7 +32,7 @@ To learn about additional options, run `dev/init --help`.
 
 ## Magento Compatibility
 
-You are asked which Magento versions you want so support. Based on the answer, version constraints for `php` and `magento/framework` are initialized in `composer.json`. Feel free to change those later, for example if you don't want to support older PHP versions.
+You are asked which Magento versions you want so support. Based on the answer, version constraints for `php` and `magento/framework` are initialized in `composer.json`, and test jobs generated in `.travis.yml`. Feel free to change those later, for example if you don't want to support older PHP versions.
 
 # Developing the template
 
@@ -41,3 +41,10 @@ You are asked which Magento versions you want so support. Based on the answer, v
 To add new placeholders, adjust the initialization script config in `dev/src/Config.php`
 
 Files where placeholders are replaced are defined in `getFilesToUpdate()`, placeholders with their default values in `getDefaultVariables()`
+
+### Adding or removing a new Magento version
+
+When new Magento versions should be added to the template or support for old ones dropped, the following changes are necessary:
+
+- In `dev/src/Config.php`, change `getMagentoVersions()`, where Magento versions are defined together with their PHP and framework version constraints.
+- In `dev/src/TravisJob.php` change the constants `LATEST_MAGENTO_VERSION` and `DEV_BRANCH_JOBS` to define the current develop branch of Magento.

@@ -198,7 +198,7 @@ class Initialize
             ':php-constraint'       => implode('||', $mergedConstraints['php']),
             ':framework-constraint' => implode('||', $mergedConstraints['magento-framework']),
             ':version-badge'        => implode('%20|%20', $magentoVersions),
-            ':travis-jobs'          => TravisJob::getTravisJobConfiguration($magentoVersions),
+            ':travis-jobs'          => TravisJob::getConfiguration($magentoVersions),
         ];
     }
 

@@ -12,7 +12,7 @@ class TravisJobTest extends TestCase
      */
     public function testYamlOutput(array $magentoVersions, string $expectedYaml)
     {
-        $this->assertEquals($expectedYaml, TravisJob::getTravisJobConfiguration($magentoVersions));
+        $this->assertEquals($expectedYaml, TravisJob::getConfiguration($magentoVersions));
     }
 
     public function yamlExpectation()
