@@ -43,7 +43,9 @@ class Initialize
 
         try {
             $rootDir = $this->getRootDir($input);
-            $this->printer->info("Module directory: $rootDir");
+            $this->printer->display("Module directory: $rootDir");
+
+            $this->welcome();
 
             $values = Config::getDefaultVariables();
             do {
@@ -73,7 +75,7 @@ class Initialize
                 [
                     "\t--unicorn\tUse a more colorful theme",
                     "\t--no-ansi\tDo not use colors",
-                    "\t--help | -h\tShow this help"
+                    "\t--help | -h\tShow this help",
                 ]
             )
         );
@@ -101,6 +103,25 @@ class Initialize
             throw new \RuntimeException('Path not found: ' . $rootDir);
         }
         return realpath($rootDir);
+    }
+
+    private function welcome()
+    {
+        $helpUrl = 'https://devdocs.magento.com/guides/v2.4/install-gde/prereq/connect-auth.html';
+        $this->printer->info(
+            implode(
+                "\n",
+                [
+                    "┌──────────────────────────────────────────────────┐",
+                    "│ 🎆 Your open source module will be ready soon! 🎆│",
+                    "└──────────────────────────────────────────────────┘",
+                    'First you need a key pair for repo.magento.com. Please see ' . $helpUrl . ' how to obtain keys.',
+                    'Why? The credentials will be stored in auth.json so that services like Scrutinizer can install the required Magento modules with composer.',
+                    'But you can also leave them empty for now and change auth.json manually later.'
+                ]
+            )
+        );
+        $this->printer->error('⚠ The keys will be visible, so do not use an account used for commerce license or marketplace extensions!');
     }
 
     private function askValues(array $defaultValues): array
@@ -134,6 +155,7 @@ class Initialize
     }
 
     //TODO generate Travis build matrix based on answers
+
     private function askMagentoCompatibility(): array
     {
         $magentoVersions = [];
