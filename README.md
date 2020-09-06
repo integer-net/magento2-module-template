@@ -1,4 +1,4 @@
-# integer_net Magento 2 Module Template
+# ![/>](./dev/favicon.png) integer_net Magento 2 Module Template
 
 This is a GitHub template.
 
