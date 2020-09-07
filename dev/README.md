@@ -48,3 +48,14 @@ When new Magento versions should be added to the template or support for old one
 
 - In `dev/src/Config.php`, change `getMagentoVersions()`, where Magento versions are defined together with their PHP and framework version constraints.
 - In `dev/src/TravisJob.php` change the constants `LATEST_MAGENTO_VERSION` and `DEV_BRANCH_JOBS` to define the current develop branch of Magento.
+
+
+## License
+
+### Template
+
+The template itself is licensed under [WTFPL](http://www.wtfpl.net/txt/copying/).
+
+### Initialization script
+
+The initialization script (content of the dev/ directory) is licensed under [MIT](./LICENSE)
