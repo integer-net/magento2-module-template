@@ -264,7 +264,7 @@ class Initialize
     private function commitChanges()
     {
         $this->printer->out("🔸 Commit and push initial version:", 'info');
-        $this->printer->display("\tgit add -A && git commit -m 'Replace placholders' && git push origin master\n");
+        $this->printer->display("\tgit add -A && git commit -m 'Replace placeholders' && git push origin master\n");
     }
 
     private function connectServices(array $values)
