@@ -22,17 +22,18 @@ cache:
 before_install:
   - |
     [[ $TEST_SUITE == "unit" ]] || (
-    curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-amd64.deb
-    sudo dpkg -i --force-confnew elasticsearch-7.6.2-amd64.deb
-    sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
-    sudo service elasticsearch restart
+      curl -O https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-7.6.2-amd64.deb
+      sudo dpkg -i --force-confnew elasticsearch-7.6.2-amd64.deb
+      sudo chown -R elasticsearch:elasticsearch /etc/default/elasticsearch
+      sudo service elasticsearch restart
     )
 before_script:
-  - |
-    [[ $COVERAGE == "true" ]] || phpenv config-rm xdebug.ini
-    ./.travis/before_script.sh
+  - [[ $COVERAGE == "true" ]] || phpenv config-rm xdebug.ini
+  - ./.travis/before_script.sh
 script: phpunit -c magento2/dev/tests/$TEST_SUITE `[[ $COVERAGE == "true" ]] && echo "--coverage-text --coverage-clover=/tmp/coverage.clover"`
 after_script:
   - |
-    [[ $COVERAGE == "true" ]] && wget https://scrutinizer-ci.com/ocular.phar
-    [[ $COVERAGE == "true" ]] && php ocular.phar code-coverage:upload --format=php-clover /tmp/coverage.clover
+    [[ $COVERAGE == "true" ]] && (
+      wget https://scrutinizer-ci.com/ocular.phar
+      php ocular.phar code-coverage:upload --format=php-clover /tmp/coverage.clover
+    )
