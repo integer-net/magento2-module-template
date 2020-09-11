@@ -18,5 +18,5 @@ $app->registerCommand(
     new Initialize($app)
 );
 
-$app->runCommand([$argv[0], 'init', ...array_slice($argv, 1)]);
+$app->runCommand(array_merge([$argv[0], 'init'], array_slice($argv, 1)));
 

@@ -12,7 +12,7 @@
     "./bin/init"
   ],
   "require": {
-    "php": "^7.4",
+    "php": "^7.2",
     "minicli/minicli": "^2.1",
     "nette/neon": "^3.2"
   },
