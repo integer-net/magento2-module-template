@@ -153,7 +153,7 @@ class Initialize
         $this->printer->printTable(
             array_merge(
                 [['placeholder', 'value']],
-                array_map(fn($key, $value) => [$key, $value], array_keys($values), $values)
+                array_map(function($key, $value) { return [$key, $value]; }, array_keys($values), $values)
             )
         );
     }

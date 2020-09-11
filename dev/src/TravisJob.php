@@ -35,7 +35,7 @@ class TravisJob
         $jobs = [];
         foreach ($magentoVersions as $magentoKey => $magentoVersion) {
             $phpVersions = map(
-                fn($constraint) => ltrim($constraint, '^~'),
+                function($constraint) { return ltrim($constraint, '^~');},
                 $versionConstraints[$magentoVersion]['php']
             );
             // Integration tests for each PHP version
