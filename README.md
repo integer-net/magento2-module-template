@@ -6,7 +6,7 @@ This is a GitHub template.
 
 [![Use this template](dev/use-this-template.png)](https://github.com/integer-net/magento2-module-template/generate)
 
-After that, clone it on your machine and run `/dev/init` for automatic configuration. For more information, see [dev/README.md](dev/README.md)
+After that, clone it on your machine and run `./dev/init` inside the repository directory for automatic configuration. For more information, see [dev/README.md](dev/README.md)
 
 <div align="center"><img src="https://www.integer-net.de/wp-content/uploads/2012/11/firmenprofil.jpg" alt="Waschbär Approved Module" /></div>
 
@@ -60,7 +60,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 ### Unit Tests
 
 ```
-vendor/bin/phpunit tests/unit
+./vendor/bin/phpunit tests/unit
 ```
 
 ### Magento Integration Tests
