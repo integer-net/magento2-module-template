@@ -3,6 +3,13 @@
 set -ex
 trap '>&2 echo Error: Command \`$BASH_COMMAND\` on line $LINENO failed with exit code $?' ERR
 
+# Disable XDebug if not needed
+if [[ $COVERAGE == "true" ]]; then
+  pecl install -f xdebug-2.9.8 #see https://github.com/magento/magento2/issues/28961
+else
+  phpenv config-rm xdebug.ini
+fi
+
 # mock mail
 sudo service postfix stop
 echo # print a newline
